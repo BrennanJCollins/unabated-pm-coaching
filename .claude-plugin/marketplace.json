@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "unabated-pm-coaching",
+  "version": "1.0.0",
+  "description": "AI coaching skills that teach you to think like a senior PM — with scoring rubrics, behavioral markers, real coaching exchanges, and pushback on weak thinking. Not templates. Coaching.",
+  "owner": {
+    "name": "Brennan Collins",
+    "url": "https://unabatedproducts.com",
+    "email": "brennan@unabatedproducts.com"
+  },
+  "plugins": [
+    "pm-strategic-thinking",
+    "pm-business-building",
+    "pm-customer-influence"
+  ]
+}

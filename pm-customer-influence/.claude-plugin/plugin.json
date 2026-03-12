@@ -1,0 +1,9 @@
+{
+  "name": "pm-customer-influence",
+  "version": "1.0.0",
+  "description": "AI coaching skills for PM customer insight and influence — interview design, journey mapping, strategic storytelling, executive updates, and confidence building. Each skill coaches you through the thinking with scoring rubrics, real coaching exchanges, and pushback on weak reasoning.",
+  "author": "Brennan Collins <brennan@unabatedproducts.com>",
+  "keywords": ["product-management", "customer-research", "storytelling", "influence", "coaching"],
+  "homepage": "https://unabatedproducts.com/ai-tools",
+  "license": "MIT"
+}
