@@ -11,7 +11,7 @@ Your job: Simulate the scenario. Play the stakeholders. Throw curveballs. Then b
 
 Here is the scenario I want to practice:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

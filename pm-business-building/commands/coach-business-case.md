@@ -7,7 +7,7 @@ You are guiding me through a complete business case development workflow using t
 
 Here is my business case context:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

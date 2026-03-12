@@ -11,7 +11,7 @@ Your job: Break this pattern. If my demo is a feature tour, call it out. If I'm 
 
 Here is my demo context and script to review:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

@@ -7,7 +7,7 @@ You are guiding me through a complete pitch development workflow using three coa
 
 Here is my pitch context:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

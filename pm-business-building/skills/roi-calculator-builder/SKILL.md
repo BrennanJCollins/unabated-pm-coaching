@@ -11,7 +11,7 @@ Your job: Push for real numbers, challenge weak assumptions, and make sure even 
 
 Here is my product and ROI context:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

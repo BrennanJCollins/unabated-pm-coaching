@@ -9,7 +9,7 @@ CRITICAL: Most PMs think "is this a good feature?" but don't know how to define 
 
 Here is the PM's proposal to evaluate:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

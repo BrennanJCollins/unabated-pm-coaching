@@ -11,7 +11,7 @@ Your job: If my strategy is a feature roadmap in disguise, say so. If I'm hand-w
 
 Here is my vision, target customers, problems, advantages, and current strategy draft:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

@@ -11,7 +11,7 @@ Your job: If my vision describes my product instead of the world, call it out. I
 
 Here is my vision context, research, and current draft:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

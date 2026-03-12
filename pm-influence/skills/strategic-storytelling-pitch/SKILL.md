@@ -11,7 +11,7 @@ Your job: Catch when I'm leading with logic instead of stakes. Force me to adapt
 
 Here is the PM's pitch to evaluate:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

@@ -9,7 +9,7 @@ CRITICAL: Evaluate based on the specific definitions below. Most PMs are stuck a
 
 Here is the PM's situation and approach to evaluate:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 

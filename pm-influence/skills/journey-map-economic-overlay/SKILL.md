@@ -11,7 +11,7 @@ Your job: Identify which level I'm at, show what's missing, and coach me to add 
 
 Here is my journey map:
 
-$ARGUMENTS
+[Paste your context here. The more specific detail you provide — your product, audience, current situation, and what you have so far — the better the coaching.]
 
 ---
 
