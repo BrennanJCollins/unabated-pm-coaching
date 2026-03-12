@@ -29,6 +29,7 @@ Template skills give you a well-organized MBA binder. Coaching skills give you a
 | **Vision Synthesis Coach** | Build a compelling product vision using the Vision Triangle | M4 |
 | **Strategy Articulation Coach** | Pressure-test your strategy with the 5 Questions + DHM Filter | M4 |
 | **Stakeholder Request Reframe** | Turn stakeholder demands into strategic conversations | M5 |
+| **AI Career Impact Advisor** | Navigate AI's impact on PM with feature parity, human ingenuity, and career positioning | — |
 
 ### Business Building (`pm-business-building`)
 
@@ -53,14 +54,28 @@ Template skills give you a well-organized MBA binder. Coaching skills give you a
 | **Strategic Storytelling Pitch Coach** | Transform pitches into compelling stories | M8 |
 | **Cafe Update Coach** | Compress impact into 60-second pitches | M8 |
 | **Confidence Scenario Simulator** | Practice high-stakes conversations with realistic pushback | M8 |
+| **First 90 Days Playbook** | Build influence in a new role through absorb-first strategy | — |
+
+### Career Growth (`pm-career-growth`)
+
+| Skill | What It Coaches |
+|---|---|
+| **Resume as Product Coach** | Redesign your resume as a conversion funnel with strategic storytelling |
+| **PM Interview Coach** | Practice interviews with simulation, not STAR rehearsal |
+| **Niche Job Search Strategist** | Narrow your search for fewer applications, better fits |
+| **Career Transition Navigator** | Map your non-PM background onto the Four Pillars of PM |
+| **Impostor to Strategist** | Convert impostor syndrome into a career development strategy |
+| **Offer Negotiation Playbook** | Negotiate offers using leverage and total comp analysis |
 
 ## Workflows
 
-Three chained workflows combine skills for end-to-end coaching:
+Five chained workflows combine skills for end-to-end coaching:
 
 - **Coach Strategy** (`pm-strategic-thinking/commands/coach-strategy.md`): Vision Synthesis → Strategy Articulation → Stakeholder Reframe
 - **Coach Business Case** (`pm-business-building/commands/coach-business-case.md`): Metrics Ladder → Unit Economics → P&L Translation
 - **Coach Pitch** (`pm-influence/commands/coach-pitch.md`): Strategic Storytelling → Cafe Update → Confidence Simulator
+- **Coach Job Search** (`pm-career-growth/commands/coach-job-search.md`): Resume Design → Niche Search → Interview Simulation
+- **Coach Career Pivot** (`pm-career-growth/commands/coach-career-pivot.md`): Career Transition → Impostor Strategy → First 90 Days
 
 ## Installation
 
@@ -72,7 +87,7 @@ Clone this repo and add the plugin directories to your configuration:
 git clone https://github.com/BrennanJCollins/unabated-pm-coaching.git
 ```
 
-Each plugin group (`pm-strategic-thinking`, `pm-business-building`, `pm-influence`) contains a `.claude-plugin/plugin.json` manifest for auto-discovery.
+Each plugin group (`pm-strategic-thinking`, `pm-business-building`, `pm-influence`, `pm-career-growth`) contains a `.claude-plugin/plugin.json` manifest for auto-discovery.
 
 ### Any LLM (ChatGPT, Gemini, etc.)
 
@@ -100,7 +115,7 @@ The skill will coach you through the framework, push back on weak thinking, and 
 
 ## About
 
-Created by [Brennan Collins](https://unabatedproducts.com), founder of Unabated Products and creator of [The Influential PM]([https://maven.com/unabated-products/the-influential-pm]) course on Maven.
+Created by [Brennan Collins](https://unabatedproducts.com), founder of Unabated Products and creator of [The Influential PM](https://maven.com/unabated-products/the-influential-pm) course on Maven.
 
 The skills encode practitioner frameworks developed across 15+ years of product leadership — not textbook PM theory. Every coaching exchange, scoring rubric, and failure pattern comes from real mentorship sessions with real PMs facing real challenges.
 
