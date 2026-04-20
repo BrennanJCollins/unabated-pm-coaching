@@ -2,7 +2,7 @@
 
 **28 AI coaching skills that teach you to think like a senior PM.** Not templates that fill in blanks. Coaching that pushes back on your thinking, scores your work, and shows you exactly where it breaks down.
 
-Built from coaching 500+ product managers. 36+ promotions. 4.9/5 course rating on Maven.
+Built from coaching 500+ product managers. Moving PMs from Stuck to Strategic. 4.8/5 course rating on Maven.
 
 ---
 
