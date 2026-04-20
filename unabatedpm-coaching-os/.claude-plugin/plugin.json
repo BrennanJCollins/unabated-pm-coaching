@@ -1,0 +1,9 @@
+{
+  "name": "unabatedpm-coaching-os",
+  "version": "2.0.0",
+  "description": "The PM Coaching Operating System — audit your deliverables against the Four Pillars, get a personalized development plan, and upgrade your documents to senior PM standard. Orchestrates all 27 coaching skills across Strategic Thinking, Business Building, Influence, and Career Growth.",
+  "author": "Brennan Collins <brennan@unabatedproducts.com>",
+  "keywords": ["product-management", "audit", "coaching", "four-pillars", "upgrade", "development-plan"],
+  "homepage": "https://unabatedproducts.com/ai-tools",
+  "license": "MIT"
+}

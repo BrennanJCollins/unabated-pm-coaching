@@ -1,16 +1,18 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "unabated-pm-coaching",
-  "version": "1.0.0",
-  "description": "AI coaching skills that teach you to think like a senior PM — with scoring rubrics, behavioral markers, real coaching exchanges, and pushback on weak thinking. Not templates. Coaching.",
+  "name": "UnabatedPM-coaching",
+  "version": "2.0.0",
+  "description": "PM Skills Assessment — audit your documents against the Four Pillars, see a visual dashboard with 16-dimension scoring, upgrade documents to senior standard with coaching annotations, and build a personalized 90-day growth plan. 27 coaching skills included.",
   "owner": {
     "name": "Brennan Collins",
     "url": "https://unabatedproducts.com",
     "email": "brennan@unabatedproducts.com"
   },
   "plugins": [
-    "pm-strategic-thinking",
-    "pm-business-building",
-    "pm-influence"
+    "unabatedpm-coaching-os",
+    "unabatedpm-strategic-thinking",
+    "unabatedpm-business-building",
+    "unabatedpm-influence",
+    "unabatedpm-career-growth"
   ]
 }

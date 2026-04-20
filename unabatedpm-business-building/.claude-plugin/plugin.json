@@ -1,0 +1,9 @@
+{
+  "name": "unabatedpm-business-building",
+  "version": "1.0.0",
+  "description": "AI coaching skills for PM business acumen — metrics design, unit economics, P&L translation, business models, and ROI modeling. Each skill coaches you through the thinking with scoring rubrics, real coaching exchanges, and pushback on weak reasoning.",
+  "author": "Brennan Collins <brennan@unabatedproducts.com>",
+  "keywords": ["product-management", "metrics", "economics", "business-model", "coaching"],
+  "homepage": "https://unabatedproducts.com/ai-tools",
+  "license": "MIT"
+}

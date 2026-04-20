@@ -1,9 +1,0 @@
-{
-  "name": "pm-strategic-thinking",
-  "version": "1.0.0",
-  "description": "AI coaching skills for PM strategic thinking — role clarity, vision synthesis, strategy articulation, and stakeholder management. Each skill coaches you through the thinking with scoring rubrics, real coaching exchanges, and pushback on weak reasoning.",
-  "author": "Brennan Collins <brennan@unabatedproducts.com>",
-  "keywords": ["product-management", "strategy", "coaching", "vision", "stakeholders"],
-  "homepage": "https://unabatedproducts.com/ai-tools",
-  "license": "MIT"
-}

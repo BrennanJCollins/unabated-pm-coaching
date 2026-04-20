@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Development Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #faf9f7;
+            --text: #1a1816;
+            --text-mid: #57534e;
+            --text-light: #a8a29e;
+            --border: #e7e5e4;
+            --surface: #ffffff;
+            --strategy: #3B82F6;
+            --delivery: #10B981;
+            --cx: #F59E0B;
+            --growth: #8B5CF6;
+            --score-1: #dc2626;
+            --score-2: #ea580c;
+            --score-3: #ca8a04;
+            --score-4: #16a34a;
+            --score-5: #0d9488;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Manrope', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { font-family: 'Sora', system-ui, sans-serif; line-height: 1.25; }
+
+        .page { max-width: 820px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+
+        /* ─── Header ─── */
+        .page-header { margin-bottom: 4rem; }
+        .page-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .page-header .subtitle { font-size: 1.05rem; color: var(--text-mid); margin-bottom: 1rem; max-width: 560px; }
+        .page-header .meta { font-size: 0.82rem; color: var(--text-light); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+        /* ─── Baseline Summary ─── */
+        .baseline { margin-bottom: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .baseline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .baseline-item { text-align: center; }
+        .baseline-pillar { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+        .baseline-score { font-family: 'Sora', system-ui, sans-serif; font-size: 1.75rem; font-weight: 700; }
+        .baseline-label { font-size: 0.75rem; color: var(--text-light); }
+
+        /* ─── Focus Areas ─── */
+        .focus-section { margin-bottom: 3rem; }
+        .focus-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 0.75rem; }
+        .focus-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .focus-tag { font-size: 0.82rem; padding: 0.3rem 0.8rem; border-radius: 100px; font-weight: 600; }
+
+        /* ─── Timeline ─── */
+        .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 1.5rem; }
+        .timeline { position: relative; padding-left: 2.5rem; }
+        .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+
+        .phase { position: relative; margin-bottom: 4rem; }
+        .phase:last-child { margin-bottom: 0; }
+
+        .phase-marker {
+            position: absolute; left: -2.5rem; top: 0.15rem;
+            width: 18px; height: 18px; border-radius: 50%;
+            border: 2px solid var(--border); background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .phase-marker-inner { width: 8px; height: 8px; border-radius: 50%; }
+
+        .phase-header { margin-bottom: 1.5rem; }
+        .phase-timeframe { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 0.25rem; }
+        .phase-title { font-size: 1.15rem; font-weight: 700; }
+        .phase-desc { font-size: 0.92rem; color: var(--text-mid); margin-top: 0.5rem; }
+
+        /* ─── Exercise Cards ─── */
+        .exercise { padding: 1.25rem 0; border-top: 1px solid var(--border); }
+        .exercise:last-child { border-bottom: 1px solid var(--border); }
+        .exercise-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.35rem; }
+        .exercise-num { font-family: 'Sora', system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--text-light); flex-shrink: 0; }
+        .exercise-title { font-weight: 700; font-size: 0.92rem; }
+        .exercise-time { font-size: 0.75rem; color: var(--text-light); margin-left: auto; flex-shrink: 0; }
+        .exercise-desc { font-size: 0.88rem; color: var(--text-mid); padding-left: 2rem; }
+        .exercise-skill { font-size: 0.78rem; color: var(--strategy); font-weight: 600; margin-top: 0.35rem; padding-left: 2rem; }
+
+        /* ─── Milestone ─── */
+        .milestone { padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); margin-top: 1.5rem; }
+        .milestone-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 0.35rem; }
+        .milestone-text { font-size: 0.92rem; color: var(--text); font-weight: 600; }
+        .milestone-detail { font-size: 0.82rem; color: var(--text-mid); margin-top: 0.25rem; }
+
+        /* ─── CTA ─── */
+        .cta-section { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+        .cta-card { padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+        .cta-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .cta-card p { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1rem; }
+        .cta-link { font-size: 0.85rem; font-weight: 600; color: var(--strategy); text-decoration: none; }
+        .cta-link:hover { text-decoration: underline; }
+
+        /* ─── Footer ─── */
+        .page-footer { text-align: center; padding: 2rem 0; font-size: 0.78rem; color: var(--text-light); border-top: 1px solid var(--border); margin-top: 3rem; }
+        .page-footer a { color: var(--text-mid); text-decoration: none; }
+        .page-footer a:hover { text-decoration: underline; }
+
+        /* ─── Print ─── */
+        @media print {
+            body { background: #fff; font-size: 11pt; }
+            .page { max-width: none; padding: 0; }
+            .timeline::before { background: #ccc; }
+            .cta-section { display: none; }
+            .page-footer { font-size: 8pt; }
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 600px) {
+            .page { padding: 2rem 1rem 4rem; }
+            .baseline-grid { grid-template-columns: repeat(2, 1fr); }
+            .cta-grid { grid-template-columns: 1fr; }
+            .exercise-head { flex-wrap: wrap; }
+            .exercise-time { margin-left: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- DEVELOP_DATA_INJECTION_POINT -->
+    <script>
+    // Sample data for preview — replaced by develop.md at runtime
+    const DEVELOP_DATA = {
+        baselineScore: 42,
+        targetScore: 58,
+        pillarAverages: { strategy: 3.0, delivery: 2.7, cx: 2.3, growth: 1.8 },
+        criticalGaps: [
+            { category: "pricing_monetization", pillar: "growth", avgScore: 1.3 },
+            { category: "sales_enablement", pillar: "growth", avgScore: 1.7 },
+            { category: "business_models_pitching", pillar: "strategy", avgScore: 2.0 },
+            { category: "support_success_enablement", pillar: "cx", avgScore: 1.7 }
+        ],
+        phases: [
+            {
+                timeframe: "Days 1\u201330",
+                title: "Build the economic foundation",
+                description: "Your biggest gap is connecting product work to business outcomes. Start with the fundamentals: unit economics, business model thinking, and pricing rationale.",
+                focusPillar: "growth",
+                exercises: [
+                    { title: "Map your product\u2019s unit economics", description: "Calculate CAC, LTV, and payback period for your current product. If you don\u2019t have exact numbers, estimate from what you know and note your assumptions.", time: "2 hrs", skill: "Unit Economics Calculator" },
+                    { title: "Build a pricing rationale", description: "Write a 1-page pricing memo for your product. Include: competitive alternatives, willingness-to-pay signals from customers, and your pricing model justification.", time: "3 hrs", skill: "ROI Calculator Builder" },
+                    { title: "Rewrite your strategy doc\u2019s business case section", description: "Take your Q3 Product Strategy and add a business case section with unit economics, competitive pricing, and revenue impact estimates.", time: "2 hrs", skill: "P&L Translation" }
+                ],
+                milestone: { text: "Re-assess your strategy doc", detail: "Run /audit on the updated document. Target: business_models_pitching improves from 2 to 3+." }
+            },
+            {
+                timeframe: "Days 31\u201360",
+                title: "Connect product to buyer outcomes",
+                description: "You can now articulate the economics. Next: bridge the gap between what you\u2019re building and what buyers care about. This is where sales enablement lives.",
+                focusPillar: "growth",
+                exercises: [
+                    { title: "Build a product metrics ladder", description: "For your primary feature, trace the path: Feature \u2192 User Task \u2192 User Value \u2192 Buyer Outcome \u2192 Business Impact. Be specific \u2014 no hand-waving.", time: "2 hrs", skill: "Product Metrics Ladder" },
+                    { title: "Write a 1-page sales enablement brief", description: "Create a document that a sales rep could use to explain your product\u2019s value to a buyer. Focus on buyer economics, not feature lists.", time: "3 hrs", skill: "Bridge Builder" },
+                    { title: "Pressure-test your pitch deck", description: "Run your Board Update Q2 through the demo script reviewer. Identify where you\u2019re showing features instead of selling outcomes.", time: "2 hrs", skill: "Demo Script Reviewer" }
+                ],
+                milestone: { text: "Re-assess your pitch deck", detail: "Run /audit on the updated deck. Target: sales_enablement improves from 1 to 2.5+." }
+            },
+            {
+                timeframe: "Days 61\u201390",
+                title: "Integrate across pillars",
+                description: "You\u2019ve built economic fluency and buyer orientation. Now weave them into your strongest area (Strategy) and weakest supporting area (CX) to create balanced PM work.",
+                focusPillar: "cx",
+                exercises: [
+                    { title: "Add economic overlay to a journey map", description: "Take an existing journey map (or create one for your product) and annotate each stage with: business cost of friction, willingness to pay for resolution, and competitive alternatives at that stage.", time: "3 hrs", skill: "Journey Map Economic Overlay" },
+                    { title: "Build a post-launch success plan", description: "For your next feature launch, write a 1-page plan covering: adoption milestones (day 1, 7, 30), support readiness, and success metrics.", time: "2 hrs", skill: "First 90 Days Playbook" },
+                    { title: "Full portfolio re-assessment", description: "Submit all 3 updated documents. Compare scores to your baseline. Identify remaining gaps for the next 90-day cycle.", time: "1 hr", skill: null }
+                ],
+                milestone: { text: "Portfolio re-assessment", detail: "Run /audit on all documents. Target: overall score improves from 42 to 55+. Growth pillar improves from 1.8 to 2.8+." }
+            }
+        ],
+        generatedAt: "2026-03-27T16:00:00Z"
+    };
+    </script>
+
+    <div class="page" id="app">
+        <!-- Populated by JavaScript -->
+    </div>
+
+    <script>
+    const PILLAR_META = {
+        strategy: { name: 'Product Strategy', color: '#3B82F6' },
+        delivery: { name: 'Product Delivery', color: '#10B981' },
+        cx: { name: 'Customer Experience', color: '#F59E0B' },
+        growth: { name: 'Adoption & Growth', color: '#8B5CF6' }
+    };
+
+    const CAT_NAMES = {
+        market_customer_intelligence: 'Market & Customer Intelligence',
+        problem_discovery_prioritization: 'Problem Discovery & Prioritization',
+        business_models_pitching: 'Business Models & Pitching',
+        vision_storytelling: 'Vision & Storytelling',
+        problem_solution_definition: 'Problem & Solution Definition',
+        stakeholder_alignment: 'Stakeholder Alignment',
+        team_throughput_quality: 'Team Throughput & Quality',
+        solution_validation: 'Solution Validation',
+        journey_optimization: 'Journey Optimization',
+        support_success_enablement: 'Support & Success Enablement',
+        user_behavior_insights: 'User Behavior Insights',
+        messaging_communication: 'Messaging & Communication',
+        market_segmentation: 'Market Segmentation',
+        sales_enablement: 'Sales Enablement',
+        product_evangelism: 'Product Evangelism',
+        pricing_monetization: 'Pricing & Monetization'
+    };
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function r1(n) { return Math.round(n * 10) / 10; }
+
+    function scoreColor(s) {
+        if (s <= 1.5) return 'var(--score-1)';
+        if (s <= 2.5) return 'var(--score-2)';
+        if (s <= 3.5) return 'var(--score-3)';
+        if (s <= 4.5) return 'var(--score-4)';
+        return 'var(--score-5)';
+    }
+
+    const dd = typeof DEVELOP_DATA !== 'undefined' ? DEVELOP_DATA : null;
+
+    function render() {
+        if (!dd) {
+            document.getElementById('app').innerHTML = `
+                <div class="page-header">
+                    <h1>PM Development Plan</h1>
+                    <p class="subtitle">Run <strong>/develop</strong> after completing an assessment to generate your personalized growth plan.</p>
+                </div>
+            `;
+            return;
+        }
+
+        const genDate = dd.generatedAt ? new Date(dd.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+        // Focus areas from critical gaps
+        const focusTags = (dd.criticalGaps || []).map(g => {
+            const color = PILLAR_META[g.pillar]?.color || 'var(--text-mid)';
+            return `<span class="focus-tag" style="background:${color}12;color:${color};border:1px solid ${color}30">${esc(CAT_NAMES[g.category] || g.category)} (${r1(g.avgScore)})</span>`;
+        }).join('');
+
+        // Baseline pillar scores
+        const pa = dd.pillarAverages || {};
+        const baselineHtml = ['strategy', 'delivery', 'cx', 'growth'].map(p => `
+            <div class="baseline-item">
+                <div class="baseline-pillar" style="color:${PILLAR_META[p].color}">${PILLAR_META[p].name}</div>
+                <div class="baseline-score" style="color:${scoreColor(pa[p] || 0)}">${r1(pa[p] || 0)}</div>
+                <div class="baseline-label">out of 5</div>
+            </div>
+        `).join('');
+
+        // Phases
+        const phasesHtml = (dd.phases || []).map((phase, pi) => {
+            const pillarColor = PILLAR_META[phase.focusPillar]?.color || 'var(--text-mid)';
+
+            const exercisesHtml = (phase.exercises || []).map((ex, ei) => `
+                <div class="exercise">
+                    <div class="exercise-head">
+                        <span class="exercise-num">${pi + 1}.${ei + 1}</span>
+                        <span class="exercise-title">${esc(ex.title)}</span>
+                        ${ex.time ? `<span class="exercise-time">${esc(ex.time)}</span>` : ''}
+                    </div>
+                    <div class="exercise-desc">${esc(ex.description)}</div>
+                    ${ex.skill ? `<div class="exercise-skill">\u2192 Practice with: ${esc(ex.skill)}</div>` : ''}
+                </div>
+            `).join('');
+
+            const milestoneHtml = phase.milestone ? `
+                <div class="milestone">
+                    <div class="milestone-label">Checkpoint</div>
+                    <div class="milestone-text">${esc(phase.milestone.text)}</div>
+                    ${phase.milestone.detail ? `<div class="milestone-detail">${esc(phase.milestone.detail)}</div>` : ''}
+                </div>
+            ` : '';
+
+            return `
+                <div class="phase">
+                    <div class="phase-marker"><div class="phase-marker-inner" style="background:${pillarColor}"></div></div>
+                    <div class="phase-header">
+                        <div class="phase-timeframe">${esc(phase.timeframe)}</div>
+                        <div class="phase-title">${esc(phase.title)}</div>
+                        <p class="phase-desc">${esc(phase.description)}</p>
+                    </div>
+                    ${exercisesHtml}
+                    ${milestoneHtml}
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('app').innerHTML = `
+            <div class="page-header">
+                <h1>PM Development Plan</h1>
+                <p class="subtitle">A 90-day roadmap to close the gaps identified in your portfolio assessment. Focus on what moves the score, not everything at once.</p>
+                <div class="meta">
+                    <span>Baseline: ${dd.baselineScore}/80</span>
+                    <span>Target: ${dd.targetScore}/80</span>
+                    ${genDate ? `<span>Generated ${genDate}</span>` : ''}
+                </div>
+            </div>
+
+            <div class="baseline">
+                <div class="baseline-grid">${baselineHtml}</div>
+            </div>
+
+            <div class="focus-section">
+                <div class="focus-label">Priority Development Areas</div>
+                <div class="focus-tags">${focusTags}</div>
+            </div>
+
+            <div class="section-label">90-Day Roadmap</div>
+            <div class="timeline">${phasesHtml}</div>
+
+            <div class="cta-section">
+                <div class="cta-grid">
+                    <div class="cta-card">
+                        <h3>The Influential PM Course</h3>
+                        <p>4-week intensive covering Strategy, Delivery, CX, and Growth with live coaching from Brennan Collins.</p>
+                        <a href="https://maven.com/unabated-products/the-influential-pm" class="cta-link">Learn more \u2192</a>
+                    </div>
+                    <div class="cta-card">
+                        <h3>1:1 Coaching</h3>
+                        <p>Targeted coaching sessions focused on your specific gaps. Most effective paired with your assessment results.</p>
+                        <a href="https://unabatedproducts.com" class="cta-link">Inquire \u2192</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <p>Powered by <a href="https://unabatedproducts.com">Unabated PM Coaching</a> \u00b7 Four Pillars Framework by Brennan Collins</p>
+            </div>
+        `;
+    }
+
+    render();
+    </script>
+</body>
+</html>

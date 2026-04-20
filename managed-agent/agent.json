@@ -1,0 +1,17 @@
+{
+  "name": "unabated-pm-coach",
+  "model": "claude-opus-4-7",
+  "system_prompt_file": "system-prompt.md",
+  "description": "Scores PM deliverables against the Four Pillars, rewrites them to senior standard with teaching annotations, and generates 30/60/90-day development plans. Invoked exclusively via the mcp.unabatedpm.com broker.",
+  "tools": [
+    {"type": "agent_toolset_20260401"}
+  ],
+  "mcp_servers": [],
+  "skills": [],
+  "metadata": {
+    "owner": "unabatedproducts.com",
+    "product": "unabated-pm-coaching",
+    "ledger_endpoint": "https://api.unabatedpm.com/v1/ledger",
+    "methodology_source": "The Influential PM by Brennan Collins"
+  }
+}

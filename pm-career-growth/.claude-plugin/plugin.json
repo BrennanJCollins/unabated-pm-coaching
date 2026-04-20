@@ -1,9 +1,0 @@
-{
-  "name": "pm-career-growth",
-  "version": "1.0.0",
-  "description": "AI coaching skills for PM career development — resume design, job search strategy, interview coaching, career transitions, confidence building, negotiation, and navigating AI's impact on the profession. Each skill coaches you through real frameworks with scoring rubrics, persona archetypes, and pushback on generic thinking.",
-  "author": "Brennan Collins <brennan@unabatedproducts.com>",
-  "keywords": ["product-management", "career", "resume", "interview", "job-search", "coaching"],
-  "homepage": "https://unabatedproducts.com/ai-tools",
-  "license": "MIT"
-}

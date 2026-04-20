@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Skills Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #faf9f7;
+            --text: #1a1816;
+            --text-mid: #57534e;
+            --text-light: #a8a29e;
+            --border: #e7e5e4;
+            --surface: #ffffff;
+            --strategy: #3B82F6;
+            --delivery: #10B981;
+            --cx: #F59E0B;
+            --growth: #8B5CF6;
+            --strategy-fade: rgba(59,130,246,0.08);
+            --delivery-fade: rgba(16,185,129,0.08);
+            --cx-fade: rgba(245,158,11,0.08);
+            --growth-fade: rgba(139,92,246,0.08);
+            --score-1: #b91c1c;
+            --score-2: #c2410c;
+            --score-3: #92400e;
+            --score-4: #15803d;
+            --score-5: #0f766e;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Manrope', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { font-family: 'Sora', system-ui, sans-serif; line-height: 1.25; }
+
+        .page { max-width: 820px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+
+        /* ─── Header ─── */
+        .page-header { margin-bottom: 4rem; }
+        .page-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .page-header .meta { font-size: 0.82rem; color: var(--text-light); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+        /* ─── Overall Score ─── */
+        .score-hero { text-align: center; margin-bottom: 5rem; }
+        .score-hero .number { font-family: 'Sora', system-ui, sans-serif; font-size: 5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+        .score-hero .denominator { font-size: 2rem; font-weight: 400; color: var(--text-light); }
+        .score-hero .interpretation { font-size: 1.05rem; color: var(--text-mid); max-width: 520px; margin: 1.25rem auto 0; line-height: 1.7; }
+        .score-hero .level-badge { display: inline-block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.3rem 0.9rem; border-radius: 100px; margin-top: 1rem; }
+
+        /* ─── Section dividers ─── */
+        .section { margin-bottom: 5rem; }
+        .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 1.5rem; }
+        .section h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 1rem; }
+
+        /* ─── Radar Chart ─── */
+        .radar-wrap { display: flex; justify-content: center; margin-bottom: 3rem; overflow: visible; }
+        .radar-svg { width: 100%; max-width: 520px; height: auto; overflow: visible; }
+        .radar-svg .grid-line { fill: none; stroke: #d6d3d1; stroke-width: 0.75; }
+        .radar-svg .grid-line-mid { stroke-dasharray: 4 4; }
+        .radar-svg .axis-line { stroke: #d6d3d1; stroke-width: 0.75; }
+        .radar-svg .data-polygon { stroke-width: 2.5; stroke-linejoin: round; }
+        .radar-svg .data-point { fill: var(--surface); stroke-width: 2.5; }
+        .radar-svg .label-text { font-family: 'Sora', system-ui, sans-serif; font-size: 13px; font-weight: 700; }
+        .radar-svg .score-text { font-family: 'Manrope', system-ui, sans-serif; font-size: 12px; font-weight: 600; }
+        .radar-svg .ring-label { font-family: 'Manrope', system-ui, sans-serif; font-size: 9px; fill: #a8a29e; }
+
+        /* ─── Pillar Narratives ─── */
+        .pillar-narrative { padding: 1.5rem 0; border-top: 1px solid var(--border); }
+        .pillar-narrative:last-child { border-bottom: 1px solid var(--border); }
+        .pillar-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .pillar-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; position: relative; top: -1px; }
+        .pillar-head h3 { font-size: 1rem; font-weight: 700; }
+        .pillar-score { font-family: 'Sora', system-ui, sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--text-mid); margin-left: auto; }
+        .pillar-body { padding-left: 1.6rem; color: var(--text-mid); font-size: 0.92rem; }
+        .pillar-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+        .cat-chip { font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 100px; background: var(--bg); border: 1px solid var(--border); color: var(--text-mid); display: flex; align-items: center; gap: 0.35rem; }
+        .cat-chip .cat-score { font-weight: 700; }
+
+        /* ─── Heat Map ─── */
+        .heatmap-container { overflow-x: auto; margin-bottom: 1rem; }
+        .heatmap-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+        .heatmap-table th { font-family: 'Sora', system-ui, sans-serif; font-weight: 600; text-align: left; padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--border); color: var(--text); white-space: nowrap; }
+        .heatmap-table th.doc-col { text-align: center; max-width: 100px; overflow: hidden; text-overflow: ellipsis; font-size: 0.72rem; font-weight: 600; }
+        .heatmap-table td { padding: 0.4rem 0.75rem; border-bottom: 1px solid var(--border); }
+        .heatmap-table td.cat-label { color: var(--text-mid); white-space: nowrap; }
+        .heatmap-table td.pillar-row { font-family: 'Sora', system-ui, sans-serif; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding-top: 1rem; border-bottom: none; }
+        .heatmap-cell { text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; cursor: default; border-radius: 3px; min-width: 36px; }
+        .heatmap-cell[data-score="1"] { background: rgba(220,38,38,0.12); color: var(--score-1); }
+        .heatmap-cell[data-score="2"] { background: rgba(234,88,12,0.12); color: var(--score-2); }
+        .heatmap-cell[data-score="3"] { background: rgba(202,138,4,0.12); color: var(--score-3); }
+        .heatmap-cell[data-score="4"] { background: rgba(22,163,74,0.12); color: var(--score-4); }
+        .heatmap-cell[data-score="5"] { background: rgba(13,148,136,0.12); color: var(--score-5); }
+        .heatmap-cell[data-score="-"] { color: var(--text-light); font-weight: 400; }
+
+        /* ─── Document Cards ─── */
+        .doc-card { border-top: 1px solid var(--border); padding: 1.25rem 0; }
+        .doc-card:last-child { border-bottom: 1px solid var(--border); }
+        .doc-head { display: flex; align-items: baseline; gap: 0.75rem; cursor: pointer; }
+        .doc-head:hover .doc-name { color: var(--strategy); }
+        .doc-type-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); background: var(--bg); border: 1px solid var(--border); padding: 0.15rem 0.5rem; border-radius: 3px; flex-shrink: 0; }
+        .doc-name { font-weight: 600; font-size: 0.95rem; flex: 1; }
+        .doc-score-badge { font-family: 'Sora', system-ui, sans-serif; font-weight: 700; font-size: 0.88rem; }
+        .doc-detail { display: none; padding: 1rem 0 0 0; }
+        .doc-detail.open { display: block; }
+        .doc-gap { padding: 0.75rem 0; border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent); }
+        .doc-gap:first-child { border-top: none; }
+        .doc-gap-cat { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .doc-gap-desc { font-size: 0.85rem; color: var(--text-mid); }
+        .doc-gap-hint { font-size: 0.82rem; color: var(--strategy); margin-top: 0.25rem; font-weight: 500; }
+
+        /* ─── Patterns ─── */
+        .pattern-item { padding: 1rem 0; border-top: 1px solid var(--border); }
+        .pattern-item:last-child { border-bottom: 1px solid var(--border); }
+        .pattern-text { font-size: 0.95rem; color: var(--text); line-height: 1.7; }
+        .pattern-meta { font-size: 0.78rem; color: var(--text-light); margin-top: 0.35rem; }
+
+        /* ─── Next Steps ─── */
+        .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+        .cta-card { padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+        .cta-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .cta-card p { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1rem; }
+        .cta-link { font-size: 0.85rem; font-weight: 600; color: var(--strategy); text-decoration: none; }
+        .cta-link:hover { text-decoration: underline; }
+
+        /* ─── Journey Navigation ─── */
+        .journey-nav { position: sticky; top: 0; z-index: 50; background: rgba(250,249,247,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); margin: 0 -1.5rem; padding: 0 1.5rem; }
+        .journey-bar { display: flex; align-items: center; justify-content: center; gap: 0; padding: 1rem 0; }
+        .journey-step { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; padding: 0.35rem 0.5rem; border-radius: 6px; transition: background 0.15s; }
+        .journey-step:hover { background: rgba(0,0,0,0.04); }
+        .journey-step.completed { color: var(--score-5); }
+        .journey-step.active { color: var(--strategy); }
+        .journey-step.waiting { color: var(--text-light); }
+        .journey-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; }
+        .journey-dot.completed { background: rgba(13,148,136,0.15); color: var(--score-5); }
+        .journey-dot.active { background: rgba(59,130,246,0.12); color: var(--strategy); border: 2px solid var(--strategy); }
+        .journey-dot.waiting { background: var(--bg); border: 2px solid var(--border); color: var(--text-light); }
+        .journey-connector { width: 48px; height: 2px; margin: 0 0.5rem; flex-shrink: 0; border-radius: 1px; }
+        .journey-connector.done { background: var(--score-5); }
+        .journey-connector.pending { background: var(--border); }
+
+        /* ─── Phase Sections ─── */
+        .phase-section { margin-bottom: 5rem; scroll-margin-top: 4rem; }
+        .phase-header-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+        .phase-number { font-family: 'Sora', system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .phase-number.completed { background: rgba(13,148,136,0.12); color: var(--score-5); }
+        .phase-number.active { background: rgba(59,130,246,0.12); color: var(--strategy); }
+        .phase-number.waiting { background: var(--bg); border: 2px solid var(--border); color: var(--text-light); }
+        .phase-title { font-family: 'Sora', system-ui, sans-serif; font-size: 1.1rem; font-weight: 700; }
+        .phase-status { font-size: 0.75rem; font-weight: 600; margin-left: auto; padding: 0.2rem 0.6rem; border-radius: 100px; }
+        .phase-status.completed { background: rgba(13,148,136,0.1); color: var(--score-5); }
+        .phase-status.ready { background: rgba(59,130,246,0.1); color: var(--strategy); }
+        .phase-status.locked { background: var(--bg); color: var(--text-light); border: 1px solid var(--border); }
+
+        /* ─── Preview Cards ─── */
+        .preview-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); }
+        .preview-card-header { padding: 1.5rem 2rem 1rem; }
+        .preview-card-header h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .preview-card-header p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; }
+        .preview-card-body { padding: 0 2rem 2rem; }
+
+        /* Before/After snippet */
+        .snippet-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+        .snippet { padding: 1rem; border-radius: 6px; font-size: 0.82rem; line-height: 1.65; }
+        .snippet-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+        .snippet.before { background: rgba(220,38,38,0.04); border: 1px solid rgba(220,38,38,0.12); }
+        .snippet.before .snippet-label { color: var(--score-1); }
+        .snippet.after { background: rgba(13,148,136,0.04); border: 1px solid rgba(13,148,136,0.12); }
+        .snippet.after .snippet-label { color: var(--score-5); }
+
+        /* Annotation preview */
+        .annotation-preview { border-left: 3px solid var(--strategy); padding: 1rem 1.25rem; background: rgba(59,130,246,0.03); border-radius: 0 6px 6px 0; margin: 1.25rem 0; font-size: 0.82rem; }
+        .annotation-preview .ann-framework { font-family: 'Sora', system-ui, sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--strategy); margin-bottom: 0.5rem; }
+        .annotation-preview .ann-field { margin-bottom: 0.35rem; color: var(--text-mid); }
+        .annotation-preview .ann-field strong { color: var(--text); font-weight: 600; }
+
+        /* Score projection */
+        .score-projection { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg); border-radius: 6px; margin: 1.25rem 0; font-size: 0.88rem; }
+        .score-projection .proj-arrow { font-size: 1.25rem; color: var(--score-4); }
+        .score-projection .proj-score { font-family: 'Sora', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; }
+        .score-projection .proj-label { font-size: 0.78rem; color: var(--text-light); }
+
+        /* Exercise preview */
+        .exercise-preview { padding: 1rem 0; border-top: 1px solid var(--border); }
+        .exercise-preview:first-child { border-top: none; }
+        .exercise-preview .ex-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.25rem; }
+        .exercise-preview .ex-desc { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 0.35rem; }
+        .exercise-preview .ex-skill { font-size: 0.78rem; color: var(--strategy); font-weight: 600; }
+        .exercise-preview .ex-time { font-size: 0.75rem; color: var(--text-light); float: right; }
+
+        /* Blurred future phases */
+        .future-phases { position: relative; margin-top: 1.5rem; }
+        .future-phases-content { filter: blur(3px); opacity: 0.5; pointer-events: none; user-select: none; }
+        .future-phases-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .future-phases-overlay span { font-family: 'Sora', system-ui, sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--strategy); background: rgba(255,255,255,0.9); padding: 0.5rem 1.25rem; border-radius: 6px; border: 1px solid rgba(59,130,246,0.2); }
+
+        /* Action buttons */
+        .action-bar { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+        .action-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Sora', system-ui, sans-serif; font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.25rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; transition: all 0.15s; }
+        .action-btn.primary { background: var(--strategy); color: #fff; }
+        .action-btn.primary:hover { background: #2554c7; }
+        .action-btn.secondary { background: transparent; color: var(--text-mid); border: 1px solid var(--border); }
+        .action-btn.secondary:hover { border-color: var(--text-mid); color: var(--text); }
+        .action-btn.locked { background: var(--bg); color: var(--text-light); border: 1px solid var(--border); cursor: default; }
+        .action-cmd { font-family: 'Manrope', system-ui, sans-serif; font-size: 0.78rem; color: var(--text-light); font-weight: 500; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--text); color: var(--bg); font-size: 0.85rem; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 8px; opacity: 0; transition: all 0.3s ease; pointer-events: none; z-index: 1000; }
+        .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Locked state */
+        .locked-card { border: 2px dashed var(--border); border-radius: 12px; padding: 2.5rem 2rem; text-align: center; background: var(--bg); }
+        .locked-card h3 { font-size: 1rem; color: var(--text-light); margin-bottom: 0.5rem; }
+        .locked-card p { font-size: 0.88rem; color: var(--text-light); }
+
+        /* ─── Upgrade Results (when completed) ─── */
+        .upgrade-result { border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; background: var(--surface); }
+        .upgrade-result-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .upgrade-result-name { font-weight: 700; font-size: 0.95rem; }
+        .upgrade-delta { font-family: 'Sora', system-ui, sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--score-4); margin-left: auto; }
+        .upgrade-annotations { font-size: 0.82rem; color: var(--text-mid); }
+
+        /* ─── Glossary ─── */
+        .gterm { border-bottom: 1px dotted var(--strategy); cursor: help; position: relative; color: var(--text); font-weight: 500; }
+        .gterm:hover .gpop, .gterm:focus-within .gpop { display: block; }
+        .gpop { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: 300px; max-width: 90vw; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.78rem; font-weight: 400; color: var(--text-mid); line-height: 1.6; z-index: 100; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .gpop strong { color: var(--text); }
+
+        /* ─── Footer ─── */
+        .page-footer { text-align: center; padding: 2rem 0; font-size: 0.78rem; color: var(--text-light); border-top: 1px solid var(--border); margin-top: 3rem; }
+        .page-footer a { color: var(--text-mid); text-decoration: none; }
+        .page-footer a:hover { text-decoration: underline; }
+
+        /* ─── Utilities ─── */
+        .no-data { font-size: 0.88rem; color: var(--text-light); font-style: italic; padding: 1rem 0; }
+        .expand-icon { transition: transform 0.2s; display: inline-block; font-size: 0.75rem; color: var(--text-light); }
+        .expand-icon.open { transform: rotate(90deg); }
+
+        /* ─── Print ─── */
+        @media print {
+            body { background: #fff; font-size: 11pt; }
+            .page { max-width: none; padding: 0; }
+            .score-hero .number { font-size: 48pt; }
+            .radar-svg { max-width: 360px; }
+            .doc-detail { display: block !important; }
+            .expand-icon { display: none; }
+            .cta-grid { display: none; }
+            .action-bar { display: none; }
+            .future-phases-overlay { display: none; }
+            .future-phases-content { filter: none; opacity: 1; }
+            .toast { display: none; }
+            .page-footer { font-size: 8pt; }
+            .gpop { display: none !important; }
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 600px) {
+            .page { padding: 2rem 1rem 4rem; }
+            .score-hero .number { font-size: 3.5rem; }
+            .radar-svg { max-width: 320px; }
+            .pillar-head { flex-wrap: wrap; }
+            .pillar-score { margin-left: 1.6rem; }
+            .heatmap-table { font-size: 0.7rem; }
+            .cta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ASSESSMENT_DATA_INJECTION_POINT -->
+    <script>
+    // Sample data for preview — replaced by audit.md at runtime
+    const ASSESSMENT_DATA = {
+        entries: [
+            {
+                id: "evt_20260327_143000_strategy", type: "assessment", timestamp: "2026-03-27T14:30:00Z",
+                documentId: "strategy.docx", documentName: "Q3 Product Strategy", classification: "Strategy Document",
+                scores: { market_customer_intelligence: 4, problem_discovery_prioritization: 3, business_models_pitching: 2, vision_storytelling: 4, problem_solution_definition: 3, stakeholder_alignment: 3, team_throughput_quality: 2, solution_validation: 2, journey_optimization: 2, support_success_enablement: 2, user_behavior_insights: 3, messaging_communication: 3, market_segmentation: 2, sales_enablement: 1, product_evangelism: 2, pricing_monetization: 1 },
+                gaps: [
+                    { category: "business_models_pitching", score: 2, description: "Strategy mentions market opportunity but lacks unit economics or competitive pricing analysis.", upgradeHint: "Add CAC/LTV estimates and competitive pricing comparison." },
+                    { category: "sales_enablement", score: 1, description: "No buyer-facing value proposition or competitive differentiation for sales teams.", upgradeHint: "Build a one-page sales enablement brief connecting product capabilities to buyer outcomes." },
+                    { category: "pricing_monetization", score: 1, description: "Pricing model is absent. No willingness-to-pay analysis.", upgradeHint: "Add pricing rationale with customer willingness-to-pay data and competitive benchmarks." }
+                ]
+            },
+            {
+                id: "evt_20260327_150000_prd", type: "assessment", timestamp: "2026-03-27T15:00:00Z",
+                documentId: "prd.docx", documentName: "Onboarding Flow PRD", classification: "PRD / Specification",
+                scores: { market_customer_intelligence: 2, problem_discovery_prioritization: 3, business_models_pitching: 1, vision_storytelling: 2, problem_solution_definition: 4, stakeholder_alignment: 4, team_throughput_quality: 3, solution_validation: 3, journey_optimization: 3, support_success_enablement: 2, user_behavior_insights: 3, messaging_communication: 3, market_segmentation: 1, sales_enablement: 1, product_evangelism: 1, pricing_monetization: 1 },
+                gaps: [
+                    { category: "business_models_pitching", score: 1, description: "PRD has no business justification. Missing ROI or impact sizing.", upgradeHint: "Add a 3-line business case: cost of current state, expected improvement, payback period." },
+                    { category: "vision_storytelling", score: 2, description: "Opens with solution description, not customer problem.", upgradeHint: "Lead with the user pain point and quantified business impact before describing the solution." }
+                ]
+            },
+            {
+                id: "evt_20260327_153000_pitch", type: "assessment", timestamp: "2026-03-27T15:30:00Z",
+                documentId: "pitch.pptx", documentName: "Board Update Q2", classification: "Pitch Deck",
+                scores: { market_customer_intelligence: 3, problem_discovery_prioritization: 2, business_models_pitching: 3, vision_storytelling: 4, problem_solution_definition: 2, stakeholder_alignment: 3, team_throughput_quality: 2, solution_validation: 2, journey_optimization: 2, support_success_enablement: 1, user_behavior_insights: 2, messaging_communication: 4, market_segmentation: 3, sales_enablement: 3, product_evangelism: 3, pricing_monetization: 2 },
+                gaps: [
+                    { category: "support_success_enablement", score: 1, description: "No post-launch plan or customer success metrics in the deck.", upgradeHint: "Add a slide on adoption milestones and support readiness." },
+                    { category: "solution_validation", score: 2, description: "Claims are unvalidated. No experiment results or customer evidence.", upgradeHint: "Include 2-3 data points from customer validation or pilot results." }
+                ]
+            }
+        ],
+        portfolio: {
+            overallScore: 42,
+            documents: [
+                { id: "strategy.docx", name: "Q3 Product Strategy", type: "Strategy Document" },
+                { id: "prd.docx", name: "Onboarding Flow PRD", type: "PRD / Specification" },
+                { id: "pitch.pptx", name: "Board Update Q2", type: "Pitch Deck" }
+            ],
+            documentCount: 3
+        },
+        interpretation: [
+            "Your Strategy pillar is your relative strength, driven by solid market awareness and vision storytelling. But buyer economics are consistently missing \u2014 none of your documents articulate willingness to pay, competitive pricing, or unit economics.",
+            "Growth is your critical gap. Sales enablement and pricing are weak across all three documents. Your work product doesn\u2019t connect product capabilities to buyer outcomes or revenue impact."
+        ]
+    };
+    </script>
+
+    <div id="toast" class="toast"></div>
+    <div class="page" id="app">
+        <!-- Populated by JavaScript -->
+    </div>
+
+    <script>
+    // ────────────────────────────────────────────────────
+    // Constants
+    // ────────────────────────────────────────────────────
+
+    const CATEGORY_KEYS = {
+        strategy: ['market_customer_intelligence', 'problem_discovery_prioritization', 'business_models_pitching', 'vision_storytelling'],
+        delivery: ['problem_solution_definition', 'stakeholder_alignment', 'team_throughput_quality', 'solution_validation'],
+        cx: ['journey_optimization', 'support_success_enablement', 'user_behavior_insights', 'messaging_communication'],
+        growth: ['market_segmentation', 'sales_enablement', 'product_evangelism', 'pricing_monetization']
+    };
+
+    const CAT_NAMES = {
+        market_customer_intelligence: 'Market & Customer Intelligence',
+        problem_discovery_prioritization: 'Problem Discovery & Prioritization',
+        business_models_pitching: 'Business Models & Pitching',
+        vision_storytelling: 'Vision & Storytelling',
+        problem_solution_definition: 'Problem & Solution Definition',
+        stakeholder_alignment: 'Stakeholder Alignment',
+        team_throughput_quality: 'Team Throughput & Quality',
+        solution_validation: 'Solution Validation',
+        journey_optimization: 'Journey Optimization',
+        support_success_enablement: 'Support & Success Enablement',
+        user_behavior_insights: 'User Behavior Insights',
+        messaging_communication: 'Messaging & Communication',
+        market_segmentation: 'Market Segmentation',
+        sales_enablement: 'Sales Enablement',
+        product_evangelism: 'Product Evangelism',
+        pricing_monetization: 'Pricing & Monetization'
+    };
+
+    const PILLAR_META = {
+        strategy: { name: 'Product Strategy', color: '#3B82F6' },
+        delivery: { name: 'Product Delivery', color: '#10B981' },
+        cx: { name: 'Customer Experience', color: '#F59E0B' },
+        growth: { name: 'Adoption & Growth', color: '#8B5CF6' }
+    };
+
+    const DEFAULT_DATA = {
+        entries: [],
+        portfolio: { overallScore: 0, pillarAverages: { strategy: 0, delivery: 0, cx: 0, growth: 0 }, documents: [], documentCount: 0 },
+        interpretation: [],
+        developmentPlan: null
+    };
+
+    const data = typeof ASSESSMENT_DATA !== 'undefined' ? ASSESSMENT_DATA : DEFAULT_DATA;
+
+    // ────────────────────────────────────────────────────
+    // Data helpers
+    // ────────────────────────────────────────────────────
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function groupByDoc() {
+        const g = {};
+        (data.entries || []).forEach(e => { (g[e.documentId] = g[e.documentId] || []).push(e); });
+        return g;
+    }
+
+    function latestAssessment(entries) {
+        return entries.filter(e => e.type === 'assessment').sort((a, b) => new Date(b.timestamp || b.date) - new Date(a.timestamp || a.date))[0];
+    }
+
+    function pillarTotal(scores, pillar) {
+        return CATEGORY_KEYS[pillar].reduce((sum, k) => sum + (scores[k] || 0), 0);
+    }
+
+    function pillarAvg(scores, pillar) {
+        const vals = CATEGORY_KEYS[pillar].map(k => scores[k]).filter(v => v != null);
+        return vals.length ? vals.reduce((a, b) => a + b) / vals.length : 0;
+    }
+
+    function portfolioFromEntries() {
+        const grouped = groupByDoc();
+        const docs = Object.entries(grouped).map(([id, entries]) => {
+            const latest = latestAssessment(entries);
+            const meta = (data.portfolio?.documents || []).find(d => d.id === id) || {};
+            const scores = latest?.scores?.pillars ? null : latest?.scores;
+            const pillarScores = latest?.scores?.pillars || null;
+            return { id, name: meta.name || latest?.documentName || id, type: meta.type || latest?.classification || 'Unknown', scores, pillarScores, total: latest?.scores?.total || (scores ? Object.values(scores).reduce((a, b) => a + b, 0) : 0), gaps: latest?.gaps || [], entries };
+        });
+
+        const avgPillars = { strategy: 0, delivery: 0, cx: 0, growth: 0 };
+        let counted = 0;
+        docs.forEach(d => {
+            const s = d.scores || flattenPillarScores(d.pillarScores);
+            if (!s) return;
+            counted++;
+            ['strategy', 'delivery', 'cx', 'growth'].forEach(p => { avgPillars[p] += pillarAvg(s, p); });
+        });
+        if (counted) ['strategy', 'delivery', 'cx', 'growth'].forEach(p => { avgPillars[p] /= counted; });
+
+        const overallScore = data.portfolio?.overallScore || docs.reduce((s, d) => s + d.total, 0) / (docs.length || 1);
+        return { docs, avgPillars, overallScore, docCount: docs.length };
+    }
+
+    function flattenPillarScores(pillars) {
+        if (!pillars) return null;
+        const flat = {};
+        Object.values(pillars).forEach(p => { if (p.categories) Object.assign(flat, p.categories); });
+        return flat;
+    }
+
+    function scoreColor(s) {
+        if (s <= 1.5) return 'var(--score-1)';
+        if (s <= 2.5) return 'var(--score-2)';
+        if (s <= 3.5) return 'var(--score-3)';
+        if (s <= 4.5) return 'var(--score-4)';
+        return 'var(--score-5)';
+    }
+
+    function levelLabel(total) {
+        if (total >= 60) return { text: 'Senior PM Ready', bg: 'rgba(13,148,136,0.1)', color: 'var(--score-5)' };
+        if (total >= 45) return { text: 'Competent \u2014 Clear Growth Areas', bg: 'rgba(202,138,4,0.1)', color: 'var(--score-3)' };
+        if (total >= 30) return { text: 'Early-Career or Significant Gaps', bg: 'rgba(234,88,12,0.1)', color: 'var(--score-2)' };
+        return { text: 'Needs Intensive Development', bg: 'rgba(220,38,38,0.1)', color: 'var(--score-1)' };
+    }
+
+    function r1(n) { return Math.round(n * 10) / 10; }
+
+    // ────────────────────────────────────────────────────
+    // SVG Radar Chart
+    // ────────────────────────────────────────────────────
+
+    function renderRadar(avgs) {
+        const cx = 250, cy = 250, maxR = 120;
+        const pillars = ['strategy', 'delivery', 'cx', 'growth'];
+        const angles = pillars.map((_, i) => (Math.PI * 2 * i / 4) - Math.PI / 2);
+
+        function pt(angle, val) {
+            const r = (val / 5) * maxR;
+            return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+        }
+
+        // Grid rings with scale labels
+        let gridSvg = '';
+        [1, 2, 3, 4, 5].forEach(level => {
+            const pts = angles.map(a => pt(a, level)).map(p => p.join(',')).join(' ');
+            const cls = level === 3 ? 'grid-line grid-line-mid' : 'grid-line';
+            gridSvg += `<polygon points="${pts}" class="${cls}"/>`;
+            // Ring label on right axis
+            const [lx, ly] = pt(angles[1], level);
+            gridSvg += `<text x="${lx + 6}" y="${ly + 3}" class="ring-label">${level}</text>`;
+        });
+
+        // Axis lines
+        let axisSvg = '';
+        angles.forEach(a => {
+            const [x, y] = pt(a, 5);
+            axisSvg += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" class="axis-line"/>`;
+        });
+
+        // Data polygon — gradient fill using pillar colors
+        const dataPoints = pillars.map((p, i) => pt(angles[i], avgs[p] || 0));
+        const dataSvg = `
+            <defs>
+                <linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:${PILLAR_META.strategy.color};stop-opacity:0.15"/>
+                    <stop offset="50%" style="stop-color:${PILLAR_META.delivery.color};stop-opacity:0.12"/>
+                    <stop offset="100%" style="stop-color:${PILLAR_META.growth.color};stop-opacity:0.15"/>
+                </linearGradient>
+            </defs>
+            <polygon points="${dataPoints.map(p => p.join(',')).join(' ')}" fill="url(#radarGrad)" stroke="${PILLAR_META.strategy.color}" stroke-width="2" stroke-linejoin="round"/>
+        `;
+
+        // Colored axis segments + data points
+        let pointsSvg = '';
+        pillars.forEach((p, i) => {
+            const [x, y] = pt(angles[i], avgs[p] || 0);
+            // Colored line from center to data point
+            pointsSvg += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${PILLAR_META[p].color}" stroke-width="1.5" opacity="0.3"/>`;
+            pointsSvg += `<circle cx="${x}" cy="${y}" r="5" fill="${PILLAR_META[p].color}" stroke="white" stroke-width="2"/>`;
+        });
+
+        // Labels — positioned with generous offsets to avoid truncation
+        const labelPos = [
+            { dx: 0, dy: -30, anchor: 'middle' },   // top (Strategy)
+            { dx: 28, dy: 6, anchor: 'start' },      // right (Delivery)
+            { dx: 0, dy: 34, anchor: 'middle' },     // bottom (CX)
+            { dx: -28, dy: 6, anchor: 'end' }        // left (Growth)
+        ];
+        let labelsSvg = '';
+        pillars.forEach((p, i) => {
+            const [x, y] = pt(angles[i], 5);
+            const o = labelPos[i];
+            labelsSvg += `<text x="${x + o.dx}" y="${y + o.dy}" text-anchor="${o.anchor}" class="label-text" fill="${PILLAR_META[p].color}">${PILLAR_META[p].name}</text>`;
+            labelsSvg += `<text x="${x + o.dx}" y="${y + o.dy + 16}" text-anchor="${o.anchor}" class="score-text" fill="${PILLAR_META[p].color}">${r1(avgs[p])} / 5</text>`;
+        });
+
+        return `<svg class="radar-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">${gridSvg}${axisSvg}${dataSvg}${pointsSvg}${labelsSvg}</svg>`;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Heat Map Table
+    // ────────────────────────────────────────────────────
+
+    function renderHeatMap(docs) {
+        if (!docs.length) return '<p class="no-data">No documents assessed yet.</p>';
+
+        const docHeaders = docs.map(d => `<th class="doc-col" title="${esc(d.name)}">${esc(d.name.length > 14 ? d.name.slice(0, 12) + '\u2026' : d.name)}</th>`).join('');
+
+        let rows = '';
+        ['strategy', 'delivery', 'cx', 'growth'].forEach(pillar => {
+            rows += `<tr><td class="pillar-row" colspan="${docs.length + 1}" style="color:${PILLAR_META[pillar].color}">${PILLAR_META[pillar].name}</td></tr>`;
+            CATEGORY_KEYS[pillar].forEach(cat => {
+                let cells = '';
+                docs.forEach(d => {
+                    const s = d.scores || flattenPillarScores(d.pillarScores);
+                    const val = s ? s[cat] : null;
+                    const display = val != null ? r1(val) : '\u2014';
+                    const ds = val != null ? Math.round(val) : '-';
+                    cells += `<td class="heatmap-cell" data-score="${ds}">${display}</td>`;
+                });
+                rows += `<tr><td class="cat-label">${CAT_NAMES[cat]}</td>${cells}</tr>`;
+            });
+        });
+
+        return `<div class="heatmap-container"><table class="heatmap-table"><thead><tr><th></th>${docHeaders}</tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Pillar Narratives
+    // ────────────────────────────────────────────────────
+
+    function renderPillarNarrative(pillar, avgPillars, docs) {
+        const avg = avgPillars[pillar];
+        const meta = PILLAR_META[pillar];
+
+        // Find strongest and weakest category across docs
+        const catAvgs = {};
+        CATEGORY_KEYS[pillar].forEach(cat => {
+            const vals = docs.map(d => {
+                const s = d.scores || flattenPillarScores(d.pillarScores);
+                return s ? s[cat] : null;
+            }).filter(v => v != null);
+            catAvgs[cat] = vals.length ? vals.reduce((a, b) => a + b) / vals.length : 0;
+        });
+
+        const sorted = Object.entries(catAvgs).sort((a, b) => b[1] - a[1]);
+        const strongest = sorted[0];
+        const weakest = sorted[sorted.length - 1];
+
+        let narrative = '';
+        if (avg >= 4) narrative = `This is your strongest area. Your work consistently demonstrates senior-level thinking here.`;
+        else if (avg >= 3) narrative = `Solid foundation. Your documents show competence, with room to deepen in specific categories.`;
+        else if (avg >= 2) narrative = `This pillar needs focused attention. Your documents show awareness but significant gaps in execution.`;
+        else narrative = `Critical gap. This area is largely absent from your work product and represents the highest-impact development opportunity.`;
+
+        if (strongest && weakest && strongest[0] !== weakest[0]) {
+            narrative += ` ${CAT_NAMES[strongest[0]]} is your relative strength (${r1(strongest[1])}), while ${CAT_NAMES[weakest[0]]} is the area to develop (${r1(weakest[1])}).`;
+        }
+
+        const chips = CATEGORY_KEYS[pillar].map(cat => {
+            const s = catAvgs[cat];
+            return `<span class="cat-chip"><span class="cat-score" style="color:${scoreColor(s)}">${r1(s)}</span> ${CAT_NAMES[cat]}</span>`;
+        }).join('');
+
+        return `
+            <div class="pillar-narrative">
+                <div class="pillar-head">
+                    <span class="pillar-dot" style="background:${meta.color}"></span>
+                    <h3>${meta.name}</h3>
+                    <span class="pillar-score">${r1(avg)}<span style="color:var(--text-light)">/5 avg</span></span>
+                </div>
+                <div class="pillar-body">
+                    <p>${glossarize(narrative)}</p>
+                    <div class="pillar-categories">${chips}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Document Cards
+    // ────────────────────────────────────────────────────
+
+    function renderDocCards(docs) {
+        if (!docs.length) return '<p class="no-data">No documents assessed yet.</p>';
+        return docs.map((d, i) => {
+            const gaps = (d.gaps || []).slice(0, 3);
+            const gapHtml = gaps.length ? gaps.map(g => `
+                <div class="doc-gap">
+                    <div class="doc-gap-cat" style="color:${scoreColor(g.score)}">${esc(CAT_NAMES[g.category] || g.category)} \u2014 ${g.score}/5</div>
+                    <div class="doc-gap-desc">${esc(g.description)}</div>
+                    ${g.upgradeHint ? `<div class="doc-gap-hint">\u2192 ${esc(g.upgradeHint)}</div>` : ''}
+                </div>
+            `).join('') : '<p class="no-data" style="padding:0.5rem 0">No significant gaps detected.</p>';
+
+            return `
+                <div class="doc-card">
+                    <div class="doc-head" onclick="toggleDoc(${i})">
+                        <span class="doc-type-badge">${esc(d.type)}</span>
+                        <span class="doc-name">${esc(d.name)}</span>
+                        <span class="doc-score-badge" style="color:${scoreColor(d.total / 16)}">${d.total}/80</span>
+                        <span class="expand-icon" id="expand-${i}">\u25B6</span>
+                    </div>
+                    <div class="doc-detail" id="detail-${i}">${gapHtml}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function toggleDoc(i) {
+        const detail = document.getElementById('detail-' + i);
+        const icon = document.getElementById('expand-' + i);
+        detail.classList.toggle('open');
+        icon.classList.toggle('open');
+    }
+
+    // ────────────────────────────────────────────────────
+    // Patterns
+    // ────────────────────────────────────────────────────
+
+    function renderPatterns(docs, interp) {
+        // Use provided interpretation if available
+        if (interp && interp.length) {
+            return interp.map(p => `<div class="pattern-item"><p class="pattern-text">${glossarize(p)}</p></div>`).join('');
+        }
+
+        // Auto-detect patterns from scores
+        const catScores = {};
+        docs.forEach(d => {
+            const s = d.scores || flattenPillarScores(d.pillarScores);
+            if (!s) return;
+            Object.entries(s).forEach(([cat, score]) => {
+                (catScores[cat] = catScores[cat] || []).push({ doc: d.name, score });
+            });
+        });
+
+        const patterns = [];
+        Object.entries(catScores).forEach(([cat, entries]) => {
+            const low = entries.filter(e => e.score <= 2);
+            const avg = entries.reduce((s, e) => s + e.score, 0) / entries.length;
+            if (low.length >= 2 && avg <= 2.5) {
+                patterns.push({
+                    text: `${CAT_NAMES[cat]} is consistently weak across ${low.length} documents (avg ${r1(avg)}/5). This is a systemic gap, not a one-off miss.`,
+                    avg
+                });
+            }
+        });
+
+        // Pillar imbalance
+        const pillarAvgs = {};
+        ['strategy', 'delivery', 'cx', 'growth'].forEach(p => {
+            const vals = docs.map(d => {
+                const s = d.scores || flattenPillarScores(d.pillarScores);
+                return s ? pillarAvg(s, p) : null;
+            }).filter(v => v != null);
+            pillarAvgs[p] = vals.length ? vals.reduce((a, b) => a + b) / vals.length : 0;
+        });
+        const sorted = Object.entries(pillarAvgs).sort((a, b) => b[1] - a[1]);
+        if (sorted[0][1] - sorted[sorted.length - 1][1] > 1.5) {
+            patterns.push({
+                text: `Your ${PILLAR_META[sorted[0][0]].name} pillar (${r1(sorted[0][1])}) significantly outpaces ${PILLAR_META[sorted[sorted.length - 1][0]].name} (${r1(sorted[sorted.length - 1][1])}). This imbalance suggests you're leaning on your strengths while underinvesting in a critical area.`,
+                avg: 0
+            });
+        }
+
+        if (!patterns.length) return '<p class="no-data">Submit 3+ documents for cross-portfolio pattern detection.</p>';
+        return patterns.sort((a, b) => a.avg - b.avg).map(p => `<div class="pattern-item"><p class="pattern-text">${glossarize(p.text)}</p></div>`).join('');
+    }
+
+    // ────────────────────────────────────────────────────
+    // Main Render
+    // ────────────────────────────────────────────────────
+
+    // ────────────────────────────────────────────────────
+    // Phase State Detection
+    // ────────────────────────────────────────────────────
+
+    function getPhaseStates() {
+        const hasAssessment = data.entries.some(e => e.type === 'assessment');
+        const upgrades = data.entries.filter(e => e.type === 'upgrade');
+        const hasUpgrade = upgrades.length > 0;
+        const hasDevelop = data.entries.some(e => e.type === 'develop') || data.developmentPlan != null;
+
+        return {
+            assess: hasAssessment ? 'completed' : 'active',
+            upgrade: hasUpgrade ? 'completed' : (hasAssessment ? 'ready' : 'locked'),
+            develop: hasDevelop ? 'completed' : (hasAssessment ? 'ready' : 'locked')
+        };
+    }
+
+    // ────────────────────────────────────────────────────
+    // Glossary Database (embedded from references/glossary.md)
+    // ────────────────────────────────────────────────────
+
+    const GLOSSARY = {
+        'Four Pillars': 'The four areas every PM operates across: Strategy (narrow chaos to a focused bet), Delivery (expand into a validated solution), Customer Experience (effortless adoption), Growth (business impact and scale).',
+        'Product Metrics Ladder': 'Feature \u2192 User Task \u2192 User Value \u2192 Buyer Outcome \u2192 Business Outcome. Connects what you build to why the business should care.',
+        'Bridge Framework': 'Connect discovered user needs to buyer and company metrics: interviews \u2192 journey mapping \u2192 metrics ladder \u2192 hypotheses \u2192 story mapping.',
+        'Hypothesis Framework': 'Frame product work as testable bets: "We believe that if we helped [persona] do [task] better, then [user goal] and [success metric], leading to [company objective]."',
+        'Strategy Assessment Criteria': 'Six tests: Pervasive Problem, Urgent Problem, Differentiated, Unique Advantage, Company Priority, Future Potential.',
+        'Vision Tests': 'Four gates: Boring Test (is it compelling?), Clarity Test (can your team explain it?), Belief Test (would they bet on it?), Decision Test (does it help you say no?).',
+        'Stakeholder Judo': 'Redirect stakeholder energy instead of fighting it. Use sincere curiosity to understand the real need, then reframe their request as supporting your strategy.',
+        'Order Taker': 'A PM who waits to be told what to build. The opposite of an Outcome Owner who investigates problems, sets direction, and owns results.',
+        'Outcome Owner': 'A PM who owns business outcomes, not feature delivery. Investigates problems, sets direction, takes responsibility for results.',
+        'Unit Economics': 'CAC (cost to acquire), LTV (lifetime value), LTV:CAC ratio, and Payback Period. The math that proves your business model works.',
+        'Buyer Economics': 'The financial case a buyer uses to justify purchasing. ROI, payback period, and competitive alternative costs.',
+        'Sincere Curiosity': 'Six diagnostic questions before reframing: What problem? For whom? What have you tried? What doesn\u2019t work? What would success look like? Why now?',
+        'Strategic Storytelling': 'Three-act pitch: Human Stakes (feel the problem) \u2192 Scale (data proving it\u2019s systemic) \u2192 Solution (now obvious). Lead with emotion, not logic.',
+        'Cafe Update': '60-second structure for hallway conversations: Context \u2192 Win \u2192 Insight \u2192 Ask \u2192 Close.',
+        'BAMFAM': 'Book A Meeting From A Meeting. Never end a conversation without scheduling the next step.',
+        'Earned Confidence': 'Competence + Confidence = Influence. Substance without delivery means nobody hears you. Delivery without substance means people stop trusting you.',
+        '10X Rule': 'Your product\u2019s value to the customer should be at least 10X the price. If you can only show 2X, find the missing value drivers.',
+        'Feature Parity Convergence': 'AI-generated PM outputs are becoming commoditized. Every PM using the same LLMs produces similar output. Human ingenuity is the differentiator.',
+        'DHM Filter': 'Three tests: Delight (does it create joy?), Hard to Copy (is it defensible?), Margin-Enhancing (does it improve economics?). Strategy must pass all three.',
+        'Hidden Metrics': 'The unspoken metrics each stakeholder actually cares about. A CEO worries about competitive position. A CFO worries about margin erosion.',
+        'Language Reset': 'Replace "requirements" with "hypotheses." Replace "the business wants" with "we\u2019ve observed." Words signal whether you think like an order taker or outcome owner.'
+    };
+
+    /** Wrap known glossary terms in text with hover tooltips */
+    function glossarize(text) {
+        if (!text) return '';
+        let result = esc(text);
+        // Sort terms longest-first to avoid partial matches
+        const terms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+        terms.forEach(term => {
+            const re = new RegExp(`\\b(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi');
+            result = result.replace(re, (match) => {
+                const def = GLOSSARY[term];
+                return `<span class="gterm" tabindex="0">${match}<span class="gpop"><strong>${esc(term)}</strong><br>${esc(def)}</span></span>`;
+            });
+        });
+        return result;
+    }
+
+    function renderJourneyBar(states) {
+        function dot(state, num) { return `<span class="journey-dot ${state}">${state === 'completed' ? '\u2713' : num}</span>`; }
+        function conn(done) { return `<span class="journey-connector ${done ? 'done' : 'pending'}"></span>`; }
+        function stepClass(s) { return s === 'completed' ? 'completed' : (s === 'ready' ? 'active' : 'waiting'); }
+
+        return `
+            <nav class="journey-nav">
+                <div class="journey-bar">
+                    <a href="#phase-assess" class="journey-step ${stepClass(states.assess)}">
+                        ${dot(stepClass(states.assess), '1')}
+                        <span>Assess</span>
+                    </a>
+                    ${conn(states.assess === 'completed')}
+                    <a href="#phase-upgrade" class="journey-step ${stepClass(states.upgrade)}">
+                        ${dot(stepClass(states.upgrade), '2')}
+                        <span>Upgrade</span>
+                    </a>
+                    ${conn(states.upgrade === 'completed')}
+                    <a href="#phase-develop" class="journey-step ${stepClass(states.develop)}">
+                        ${dot(stepClass(states.develop), '3')}
+                        <span>Develop</span>
+                    </a>
+                </div>
+            </nav>
+        `;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Platform Detection & Deep-Linking
+    // ────────────────────────────────────────────────────
+
+    const platform = data.platform || { name: 'unknown' };
+
+    const SKILL_FOR_CATEGORY = {
+        business_models_pitching: 'Unit Economics Calculator',
+        pricing_monetization: 'ROI Calculator Builder',
+        sales_enablement: 'Bridge Builder',
+        vision_storytelling: 'Vision Synthesis',
+        market_customer_intelligence: 'Strategy Articulation',
+        problem_discovery_prioritization: 'Product Metrics Ladder',
+        stakeholder_alignment: 'Stakeholder Request Reframe',
+        solution_validation: 'Product Metrics Ladder',
+        journey_optimization: 'Journey Map Economic Overlay',
+        support_success_enablement: 'First 90 Days Playbook',
+        user_behavior_insights: 'Interview Question Design',
+        messaging_communication: 'Cafe Update',
+        market_segmentation: 'Business Model Canvas',
+        product_evangelism: 'Demo Script Reviewer',
+        problem_solution_definition: 'Product Objective Definition',
+        team_throughput_quality: null
+    };
+
+    function copyAndToast(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const t = document.getElementById('toast');
+            t.textContent = 'Copied! Paste in your AI assistant.';
+            t.classList.add('visible');
+            setTimeout(() => t.classList.remove('visible'), 2500);
+        }).catch(() => {
+            // Fallback: select a temporary textarea
+            const ta = document.createElement('textarea');
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            document.execCommand('copy'); document.body.removeChild(ta);
+        });
+    }
+
+    function renderActionBar(command) {
+        const cmd = esc(command);
+        const encoded = encodeURIComponent(command);
+        const pn = platform.name || 'unknown';
+
+        let primaryBtn = '';
+        if (pn === 'chatgpt') {
+            primaryBtn = `<a href="https://chat.openai.com/?q=${encoded}" target="_blank" class="action-btn primary">Continue in ChatGPT \u2192</a>`;
+        } else if (pn === 'gemini') {
+            primaryBtn = `<a href="https://gemini.google.com/guided-learning?query=${encoded}" target="_blank" class="action-btn primary">Continue in Gemini \u2192</a>`;
+        } else if (pn === 'claude-code') {
+            primaryBtn = `<button class="action-btn primary" onclick="copyAndToast('claude &quot;${cmd}&quot;')">Copy terminal command</button>`;
+        } else if (pn === 'claude-desktop') {
+            primaryBtn = `<button class="action-btn primary" onclick="copyAndToast('${cmd}')">Copy for Claude Desktop</button>`;
+        } else {
+            primaryBtn = `<button class="action-btn primary" onclick="copyAndToast('${cmd}')">Copy command</button>`;
+        }
+
+        return `
+            <div class="action-bar">
+                ${primaryBtn}
+                <button class="action-btn secondary" onclick="copyAndToast('${cmd}')">Copy command</button>
+                <span class="action-cmd">${cmd}</span>
+            </div>
+        `;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Upgrade Phase Rendering (Rich Preview)
+    // ────────────────────────────────────────────────────
+
+    function renderUpgradePhase(states, pf) {
+        const numClass = states.upgrade === 'completed' ? 'completed' : (states.upgrade === 'ready' ? 'active' : 'waiting');
+        const statusClass = states.upgrade === 'completed' ? 'completed' : (states.upgrade === 'ready' ? 'ready' : 'locked');
+        const statusText = states.upgrade === 'completed' ? 'Complete' : (states.upgrade === 'ready' ? 'Ready' : 'Run /audit first');
+
+        let content = '';
+
+        if (states.upgrade === 'completed') {
+            const upgrades = data.entries.filter(e => e.type === 'upgrade');
+            content = upgrades.map(u => {
+                const delta = u.scores.total - (u.scoresBefore || 0);
+                return `
+                    <div class="upgrade-result">
+                        <div class="upgrade-result-head">
+                            <span class="upgrade-result-name">${esc(u.documentName || u.documentId)}</span>
+                            <span class="upgrade-delta">+${delta} points</span>
+                        </div>
+                        <div class="upgrade-annotations">${u.annotationCount || '?'} coaching annotations \u00b7 ${u.iterations || 1} QA iteration${(u.iterations || 1) !== 1 ? 's' : ''} \u00b7 ${u.scoresBefore || '?'}/80 \u2192 ${u.scores.total}/80</div>
+                        ${u.patterns && u.patterns.length ? `<div style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-mid)">${u.patterns.map(p => `<div style="padding:0.2rem 0">\u2022 ${esc(p)}</div>`).join('')}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        } else if (states.upgrade === 'ready') {
+            const weakest = pf.docs.length ? [...pf.docs].sort((a, b) => a.total - b.total)[0] : null;
+            const topGap = weakest ? (weakest.gaps || [])[0] : null;
+
+            // Build before/after preview from the top gap
+            let snippetHtml = '';
+            let annotationHtml = '';
+            if (topGap) {
+                const beforeText = topGap.description;
+                const afterText = topGap.upgradeHint;
+                const skill = SKILL_FOR_CATEGORY[topGap.category];
+
+                snippetHtml = `
+                    <div class="snippet-pair">
+                        <div class="snippet before">
+                            <div class="snippet-label">Current (${r1(topGap.score)}/5)</div>
+                            ${esc(beforeText)}
+                        </div>
+                        <div class="snippet after">
+                            <div class="snippet-label">After upgrade</div>
+                            ${esc(afterText)}
+                        </div>
+                    </div>
+                `;
+
+                annotationHtml = `
+                    <div class="annotation-preview">
+                        <div class="ann-framework">${skill ? esc(skill) : esc(CAT_NAMES[topGap.category] || topGap.category)}</div>
+                        <div class="ann-field"><strong>What changed:</strong> ${esc(beforeText)}</div>
+                        <div class="ann-field"><strong>Why:</strong> ${esc(afterText)}</div>
+                        <div class="ann-field"><strong>Try this:</strong> Before writing any section, ask "If I deleted the product name, would a buyer still care about this paragraph?"</div>
+                    </div>
+                `;
+            }
+
+            // Score projection
+            const gapCount = weakest ? (weakest.gaps || []).length : 0;
+            const weakestScores = weakest?.scores || flattenPillarScores(weakest?.pillarScores) || {};
+            const currentTotal = weakest ? weakest.total : 0;
+            const projectedGain = Math.min(gapCount * 3, 20); // conservative: ~3 points per gap addressed
+            const projectedTotal = currentTotal + projectedGain;
+
+            content = `
+                <div class="preview-card">
+                    <div class="preview-card-header">
+                        <h3>Preview: Upgrading ${weakest ? esc(weakest.name) : 'your weakest document'}</h3>
+                        <p>Your lowest-scoring document at ${currentTotal}/80. Here's a sample of what the upgrade produces \u2014 every change annotated with the framework behind it.</p>
+                    </div>
+                    <div class="preview-card-body">
+                        ${snippetHtml}
+                        ${annotationHtml}
+                        <div class="score-projection">
+                            <div>
+                                <div class="proj-score">${currentTotal}/80</div>
+                                <div class="proj-label">Current</div>
+                            </div>
+                            <div class="proj-arrow">\u2192</div>
+                            <div>
+                                <div class="proj-score" style="color:var(--score-4)">${projectedTotal}/80</div>
+                                <div class="proj-label">Projected</div>
+                            </div>
+                            <div style="font-size:0.82rem;color:var(--text-mid);margin-left:0.5rem">${gapCount} addressable gaps across ${Object.keys(weakestScores).length} categories</div>
+                        </div>
+                        ${renderActionBar('/upgrade ' + (weakest ? weakest.id : ''))}
+                    </div>
+                </div>
+            `;
+        } else {
+            content = `
+                <div class="locked-card">
+                    <h3>Document upgrades unlock after assessment</h3>
+                    <p>Run /audit first to score your documents, then upgrade your weakest one.</p>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="phase-section" id="phase-upgrade">
+                <div class="phase-header-bar">
+                    <span class="phase-number ${numClass}">2</span>
+                    <span class="phase-title">Upgrade</span>
+                    <span class="phase-status ${statusClass}">${statusText}</span>
+                </div>
+                ${content}
+            </div>
+        `;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Develop Phase Rendering (Rich Preview)
+    // ────────────────────────────────────────────────────
+
+    function renderDevelopPhase(states, pf) {
+        const numClass = states.develop === 'completed' ? 'completed' : (states.develop === 'ready' ? 'active' : 'waiting');
+        const statusClass = states.develop === 'completed' ? 'completed' : (states.develop === 'ready' ? 'ready' : 'locked');
+        const statusText = states.develop === 'completed' ? 'Complete' : (states.develop === 'ready' ? 'Ready' : 'Run /audit first');
+
+        let content = '';
+
+        if (states.develop === 'completed' && data.developmentPlan) {
+            const dp = data.developmentPlan;
+            content = `
+                <div style="padding:1rem 0">
+                    <p style="font-size:0.92rem;color:var(--text-mid);margin-bottom:1.25rem">Your 90-day growth plan is ready. Baseline: ${dp.baselineScore || '?'}/80. Target: ${dp.targetScore || '?'}/80.</p>
+                    ${dp.phases ? dp.phases.map(phase => `
+                        <div style="padding:0.75rem 0;border-top:1px solid var(--border)">
+                            <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light)">${esc(phase.timeframe)}</div>
+                            <div style="font-weight:700;font-size:0.95rem;margin-top:0.25rem">${esc(phase.title)}</div>
+                            <div style="font-size:0.85rem;color:var(--text-mid);margin-top:0.25rem">${phase.exercises ? phase.exercises.length : '?'} exercises \u00b7 Focus: ${esc(PILLAR_META[phase.focusPillar]?.name || phase.focusPillar)}</div>
+                        </div>
+                    `).join('') : ''}
+                    <div style="margin-top:1rem;font-size:0.85rem"><a href="pm_development_plan.html" class="cta-link">Open full development plan \u2192</a></div>
+                </div>
+            `;
+        } else if (states.develop === 'ready') {
+            // Compute gap data for preview
+            const allScores = {};
+            pf.docs.forEach(d => {
+                const s = d.scores || flattenPillarScores(d.pillarScores);
+                if (!s) return;
+                Object.entries(s).forEach(([cat, score]) => {
+                    (allScores[cat] = allScores[cat] || []).push(score);
+                });
+            });
+            const catAvgs = Object.entries(allScores).map(([cat, scores]) => ({
+                cat, avg: scores.reduce((a, b) => a + b) / scores.length
+            })).sort((a, b) => a.avg - b.avg);
+            const bottom3 = catAvgs.slice(0, 3);
+
+            // Find weakest pillar for phase 1 theme
+            const pillarAvgs = {};
+            ['strategy', 'delivery', 'cx', 'growth'].forEach(p => {
+                const vals = pf.docs.map(d => {
+                    const s = d.scores || flattenPillarScores(d.pillarScores);
+                    return s ? pillarAvg(s, p) : null;
+                }).filter(v => v != null);
+                pillarAvgs[p] = vals.length ? vals.reduce((a, b) => a + b) / vals.length : 0;
+            });
+            const weakestPillar = Object.entries(pillarAvgs).sort((a, b) => a[1] - b[1])[0];
+            const wpKey = weakestPillar[0];
+            const wpMeta = PILLAR_META[wpKey];
+
+            // Generate preview exercises from the bottom gaps
+            const exercises = bottom3.map(c => {
+                const skill = SKILL_FOR_CATEGORY[c.cat];
+                const catName = CAT_NAMES[c.cat] || c.cat;
+                return { cat: c.cat, catName, avg: c.avg, skill };
+            });
+
+            // Weakest doc for milestone
+            const weakest = pf.docs.length ? [...pf.docs].sort((a, b) => a.total - b.total)[0] : null;
+
+            content = `
+                <div class="preview-card">
+                    <div class="preview-card-header">
+                        <h3>Preview: Your 90-day development plan</h3>
+                        <p>Built from your assessment data. ${bottom3.length} critical gaps identified. Weakest pillar: ${wpMeta.name} (${r1(weakestPillar[1])}/5).</p>
+                    </div>
+                    <div class="preview-card-body">
+                        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:${wpMeta.color};margin-bottom:0.5rem">Days 1\u201330: Build your ${wpMeta.name.toLowerCase()} foundation</div>
+
+                        ${exercises.map((ex, i) => `
+                            <div class="exercise-preview">
+                                <div class="ex-title"><span class="ex-time">${1 + i} hrs</span>Exercise ${i + 1}: Practice ${esc(ex.catName)}</div>
+                                <div class="ex-desc">Apply the ${ex.skill ? esc(ex.skill) : esc(ex.catName)} framework to your actual product. Current score: ${r1(ex.avg)}/5. Target: ${r1(Math.min(ex.avg + 1.5, 5))}/5.</div>
+                                ${ex.skill ? `<div class="ex-skill">\u2192 Guided practice: ${esc(ex.skill)}</div>` : ''}
+                            </div>
+                        `).join('')}
+
+                        ${weakest ? `
+                            <div style="padding:1rem 1.25rem;background:var(--bg);border-radius:6px;margin-top:1.25rem;font-size:0.88rem">
+                                <strong style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light)">Day 30 Checkpoint</strong><br>
+                                Re-assess ${esc(weakest.name)}. Target: ${wpMeta.name} pillar improves from ${r1(weakestPillar[1])} to ${r1(Math.min(weakestPillar[1] + 1, 5))}/5.
+                            </div>
+                        ` : ''}
+
+                        <div class="future-phases">
+                            <div class="future-phases-content">
+                                <div style="padding:0.75rem 0;border-top:1px solid var(--border)">
+                                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light)">Days 31\u201360</div>
+                                    <div style="font-weight:700;font-size:0.95rem;margin-top:0.25rem">Connect product to buyer outcomes</div>
+                                    <div style="font-size:0.85rem;color:var(--text-mid);margin-top:0.25rem">3 exercises targeting development areas</div>
+                                </div>
+                                <div style="padding:0.75rem 0;border-top:1px solid var(--border)">
+                                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light)">Days 61\u201390</div>
+                                    <div style="font-weight:700;font-size:0.95rem;margin-top:0.25rem">Integrate across all four pillars</div>
+                                    <div style="font-size:0.85rem;color:var(--text-mid);margin-top:0.25rem">Portfolio re-assessment + next cycle planning</div>
+                                </div>
+                            </div>
+                            <div class="future-phases-overlay">
+                                <span>Run /develop to unlock full plan</span>
+                            </div>
+                        </div>
+
+                        ${renderActionBar('/develop')}
+                    </div>
+                </div>
+            `;
+        } else {
+            content = `
+                <div class="locked-card">
+                    <h3>Growth planning unlocks after assessment</h3>
+                    <p>Run /audit first to identify your gaps, then /develop builds a targeted plan.</p>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="phase-section" id="phase-develop">
+                <div class="phase-header-bar">
+                    <span class="phase-number ${numClass}">3</span>
+                    <span class="phase-title">Develop</span>
+                    <span class="phase-status ${statusClass}">${statusText}</span>
+                </div>
+                ${content}
+            </div>
+        `;
+    }
+
+    // ────────────────────────────────────────────────────
+    // Main Render
+    // ────────────────────────────────────────────────────
+
+    function render() {
+        const pf = portfolioFromEntries();
+        const level = levelLabel(pf.overallScore);
+        const states = getPhaseStates();
+        const latestDate = data.entries.length ? new Date(Math.max(...data.entries.map(e => new Date(e.timestamp || e.date)))).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'No assessments yet';
+
+        document.getElementById('app').innerHTML = `
+            <div class="page-header">
+                <h1>PM Skills Assessment</h1>
+                <div class="meta">
+                    <span>${pf.docCount} document${pf.docCount !== 1 ? 's' : ''} assessed</span>
+                    <span>${latestDate}</span>
+                </div>
+            </div>
+
+            ${renderJourneyBar(states)}
+
+            <!-- ═══ PHASE 1: ASSESS ═══ -->
+            <div class="phase-section" id="phase-assess">
+                <div class="phase-header-bar">
+                    <span class="phase-number ${states.assess === 'completed' ? 'completed' : 'active'}">1</span>
+                    <span class="phase-title">Assess</span>
+                    <span class="phase-status ${states.assess === 'completed' ? 'completed' : 'ready'}">${states.assess === 'completed' ? 'Complete' : 'In Progress'}</span>
+                </div>
+
+                <div class="score-hero">
+                    <div class="number">${Math.round(pf.overallScore)}<span class="denominator">/80</span></div>
+                    <span class="level-badge" style="background:${level.bg};color:${level.color}">${level.text}</span>
+                    ${data.interpretation && data.interpretation.length ? `<p class="interpretation">${glossarize(data.interpretation[0])}</p>` : ''}
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Your Shape</div>
+                    <div class="radar-wrap">${renderRadar(pf.avgPillars)}</div>
+                    ${['strategy', 'delivery', 'cx', 'growth'].map(p => renderPillarNarrative(p, pf.avgPillars, pf.docs)).join('')}
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Score Breakdown</div>
+                    <h2>How each document performs across 16 dimensions</h2>
+                    ${renderHeatMap(pf.docs)}
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Documents</div>
+                    <h2>Individual assessments</h2>
+                    ${renderDocCards(pf.docs)}
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Patterns</div>
+                    <h2>What your portfolio reveals</h2>
+                    ${renderPatterns(pf.docs, data.interpretation)}
+                </div>
+            </div>
+
+            <!-- ═══ PHASE 2: UPGRADE ═══ -->
+            ${renderUpgradePhase(states, pf)}
+
+            <!-- ═══ PHASE 3: DEVELOP ═══ -->
+            ${renderDevelopPhase(states, pf)}
+
+            <!-- ═══ GO DEEPER ═══ -->
+            <div class="section" style="margin-top:2rem">
+                <div class="cta-grid">
+                    <div class="cta-card">
+                        <h3>The Influential PM Course</h3>
+                        <p>4-week intensive on Strategy, Delivery, CX, and Growth with live coaching from Brennan Collins.</p>
+                        <a href="https://maven.com/unabated-products/the-influential-pm" class="cta-link">Learn more \u2192</a>
+                    </div>
+                    <div class="cta-card">
+                        <h3>1:1 Coaching</h3>
+                        <p>Targeted sessions focused on your specific gaps. Most effective paired with your assessment results.</p>
+                        <a href="https://unabatedproducts.com" class="cta-link">Inquire \u2192</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <p>Powered by <a href="https://unabatedproducts.com">Unabated PM Coaching</a> \u00b7 Four Pillars Framework by Brennan Collins</p>
+            </div>
+        `;
+    }
+
+    render();
+    </script>
+</body>
+</html>

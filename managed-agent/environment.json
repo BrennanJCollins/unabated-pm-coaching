@@ -1,0 +1,30 @@
+{
+  "name": "unabated-pm-coach-env",
+  "config": {
+    "type": "cloud",
+    "packages": {
+      "apt": [
+        "pandoc",
+        "libreoffice",
+        "poppler-utils"
+      ],
+      "pip": [
+        "python-docx",
+        "python-pptx",
+        "openpyxl",
+        "pdfplumber",
+        "markitdown",
+        "httpx"
+      ]
+    },
+    "networking": {
+      "type": "limited",
+      "allowed_hosts": [
+        "https://api.unabatedpm.com",
+        "https://maven.com"
+      ],
+      "allow_mcp_servers": true,
+      "allow_package_managers": true
+    }
+  }
+}
