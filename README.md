@@ -18,7 +18,7 @@ Most AI "PM tools" apply a framework like a checklist. These skills coach you th
 
 ### Claude Desktop (Cowork)
 
-Install the plugin from the [Cowork plugin marketplace](https://unabatedproducts.com/ai-tools). Once installed, all 28 skills activate automatically based on what you ask. You can also run guided workflows as slash commands:
+Point Claude to this repository and ask it to install all skills. Once installed, all 28 skills activate automatically based on what you ask. You can also run guided workflows as slash commands:
 
 - `/coach-strategy` — Build your vision, pressure-test your strategy, prepare for stakeholder pushback
 - `/coach-business-case` — Connect metrics to outcomes, calculate unit economics, translate to P&L
